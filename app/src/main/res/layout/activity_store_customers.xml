@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundgrey"
-    tools:context=".StoreMenu">
+    tools:context=".StoreCustomers">
 
     <View
         android:id="@+id/view14"
@@ -66,5 +66,21 @@
         android:layout_marginTop="48dp"
         app:layout_constraintStart_toStartOf="@+id/view14"
         app:layout_constraintTop_toTopOf="@+id/view14" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        app:itemIconTint="@drawable/selector"
+        app:itemTextColor="@drawable/selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:menu="@menu/bottom_menu_store" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

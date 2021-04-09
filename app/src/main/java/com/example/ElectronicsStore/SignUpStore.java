@@ -63,14 +63,14 @@ public class SignUpStore extends AppCompatActivity {
 
                         //add user to realtime database
                         db= FirebaseDatabase.getInstance().getReference(); // get reference from roo
-                        Store r = new Store(uid, email, password, name, null);
+                        Store r = new Store(uid, email, password, name);
 
 
-                        db.child("Stores").child(uid).setValue(r).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        db.child("stores").child(uid).setValue(r).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(SignUpStore.this, "sign up is successful", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(SignUpStore.this, StockControl.class);
+                                Toast.makeText(SignUpStore.this, "sign up is successful, please Login", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(SignUpStore.this, Login.class);
                                 startActivity(intent);
                             }
                         }).addOnFailureListener(new OnFailureListener() {

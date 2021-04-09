@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@color/backgroundgrey"
-    android:id="@+id/HomeMenu"
-    tools:context=".HomeMenu">
+    android:layout_height="match_parent"
+    tools:context=".ChooseStore">
+
 
     <View
         android:id="@+id/view11"
@@ -21,8 +21,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RV_Booking"
-        android:layout_width="353dp"
-        android:layout_height="474dp"
+        android:layout_width="354dp"
+        android:layout_height="460dp"
         android:layout_marginStart="28dp"
         android:layout_marginLeft="28dp"
         android:layout_marginTop="28dp"
@@ -38,7 +38,7 @@
         android:layout_marginTop="52dp"
         android:layout_marginEnd="35dp"
         android:layout_marginRight="35dp"
-        android:text="Store name"
+        android:text="Choose a Store"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -47,21 +47,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        app:itemIconTint="@drawable/selector"
-        app:itemTextColor="@drawable/selector"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/bottom_menu" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

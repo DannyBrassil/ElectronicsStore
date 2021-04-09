@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class StoreMenu extends AppCompatActivity {
+public class StoreCustomers extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     DatabaseReference db;
@@ -39,7 +41,7 @@ public class StoreMenu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_store_menu);
+        setContentView(R.layout.activity_store_customers);
 
         final Intent intent = getIntent();
         title = intent.getStringExtra("title");
@@ -69,6 +71,27 @@ public class StoreMenu extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 MakePuchase();
+            }
+        });
+
+        // bottom nav menu
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        // home is selected
+        bottomNavigationView.setSelectedItemId(R.id.StoreCustomer);
+        //item selected listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.StoreCustomer:
+                        return true;
+                    case R.id.StoreStock:
+                        startActivity(new Intent(getApplicationContext(), StockControl.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+
+                return false;
             }
         });
     }
@@ -126,14 +149,14 @@ public class StoreMenu extends AppCompatActivity {
         db.child("Users").child(uid).child("Booking").push().setValue(b).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(StoreMenu.this, "Booking is successful", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(StoreMenu.this, HomeMenu.class);
+                Toast.makeText(StoreCustomers.this, "Booking is successful", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(StoreCustomers.this, HomeMenu.class);
                 startActivity(intent);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(StoreMenu.this, "Booking is not successful", Toast.LENGTH_LONG).show();
+                Toast.makeText(StoreCustomers.this, "Booking is not successful", Toast.LENGTH_LONG).show();
             }
         });
 

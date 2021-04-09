@@ -73,7 +73,7 @@ public class AdapterLocationList extends RecyclerView.Adapter<AdapterLocationLis
         final String p = Double.toString(price);
 
         holder.Name.setText(title);
-        holder.Price.setText(p);
+        holder.Price.setText("$ "+p);
 
 
 

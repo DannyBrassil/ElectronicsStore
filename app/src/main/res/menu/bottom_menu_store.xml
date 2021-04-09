@@ -3,11 +3,11 @@
 
 
     <item android:title=""
-    android:id="@+id/home"
+    android:id="@+id/StoreStock"
     android:icon="@drawable/home_pic"/>
 
     <item android:title=""
-        android:id="@+id/profile"
-        android:icon="@drawable/ic_baseline_shopping_cart_24"/>
+        android:id="@+id/StoreCustomer"
+        android:icon="@drawable/person_pic"/>
 
 </menu>

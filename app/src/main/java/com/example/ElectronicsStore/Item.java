@@ -8,15 +8,19 @@ public class Item {
     private double price;
     private String category;
     private String manufacturer;
+    private String description;
+    private int stock;
     private ArrayList<Review> reviews;
 
     public Item(){ }
 
-    public Item( String name, double price, String category, String manufacturer, ArrayList<Review> reviews) {
+    public Item( String name, double price, String category, String manufacturer, String description, int stock, ArrayList<Review> reviews) {
         this.name = name;
         this.price = price;
         this.category=category;
         this.manufacturer=manufacturer;
+        this.description =description;
+        this.stock=stock;
         this.reviews=reviews;
     }
 
@@ -59,5 +63,21 @@ public class Item {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 }

@@ -13,19 +13,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.ElectronicsStore.Profile"></activity>
-        <activity android:name="com.example.ElectronicsStore.StoreMenu" />
-        <activity android:name="com.example.ElectronicsStore.MenuDialog" />
-        <activity android:name="com.example.ElectronicsStore.StockControl" />
-        <activity android:name="com.example.ElectronicsStore.SignUpStore" />
+        <activity android:name=".ChooseStore"></activity>
+        <activity android:name=".Profile" />
+        <activity android:name=".StoreCustomers" />
+        <activity android:name=".AddItemDialog" />
+        <activity android:name=".StockControl" />
+        <activity android:name=".SignUpStore" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBoHVSnUxw-t_eNEhaKzkBtsrl9QxzpSeE" />
 
-        <activity android:name="com.example.ElectronicsStore.HomeMenu" />
-        <activity android:name="com.example.ElectronicsStore.SignUp" />
-        <activity android:name="com.example.ElectronicsStore.Login">
+        <activity android:name=".HomeMenu" />
+        <activity android:name=".SignUp" />
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

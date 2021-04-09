@@ -8,18 +8,18 @@ public class Store {
     private String email;
     private String password;
     private String name;
-    private ArrayList<Item> items;
+
 
     public Store(){
 
     }
 
-    public Store(String id, String e, String p, String name,  ArrayList<Item> items) {
+    public Store(String id, String e, String p, String name ) {
         this.id=id;
         this.email=e;
         this.password=p;
         this.name = name;
-        this.items=items;
+
 
     }
 
@@ -55,11 +55,4 @@ public class Store {
         this.name = name;
     }
 
-    public ArrayList<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(ArrayList<Item> items) {
-        this.items = items;
-    }
 }

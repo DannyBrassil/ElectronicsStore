@@ -14,6 +14,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
 
@@ -74,13 +79,53 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(Login.this, "signup successful", Toast.LENGTH_LONG).show();
-                            //FirebaseUser user = mAuth.getCurrentUser();
-                            // String userId = user.getUid();
-                            Intent intent = new Intent(Login.this, HomeMenu.class);
-                            // intent.putExtra("username",user.getEmail());
-                            startActivity(intent);
+
+                            //check if email is in users database
+                            DatabaseReference dbusers;
+                            dbusers= FirebaseDatabase.getInstance().getReference("users");
+                            dbusers.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot snapshot2 : snapshot.getChildren()) {
+                                        User user = snapshot2.getValue(User.class);
+                                        if(email.equals(user.getEmail())){
+                                            //if email is in users direct to the user homepage
+                                            Intent intent = new Intent(Login.this, ChooseStore.class);
+                                            intent.putExtra("username",user.getEmail());
+                                            startActivity(intent);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            //check if email is in store database
+                            DatabaseReference dbcarparks;
+                            dbcarparks= FirebaseDatabase.getInstance().getReference("stores");
+                            dbcarparks.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot snapshot2 : snapshot.getChildren()) {
+                                        Store c = snapshot2.getValue(Store.class);
+                                        if(email.equals(c.getEmail())){
+                                            //if email is in carparks direct to the carpark homepage
+                                            Intent intent = new Intent(Login.this, StockControl.class);
+                                            intent.putExtra("username",c.getEmail());
+                                            startActivity(intent);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(Login.this, "signup unsuccessful", Toast.LENGTH_LONG).show();

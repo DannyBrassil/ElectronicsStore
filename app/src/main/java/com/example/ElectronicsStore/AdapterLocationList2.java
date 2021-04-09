@@ -27,16 +27,9 @@ public class AdapterLocationList2 extends RecyclerView.Adapter<AdapterLocationLi
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView Name;   //textview of row layout
 
-
-
-
         public MyViewHolder(View itemView){
             super(itemView);
             Name=(TextView) itemView.findViewById(R.id.NameOfItem);
-
-
-
-
         }
     }
 
@@ -57,38 +50,26 @@ public class AdapterLocationList2 extends RecyclerView.Adapter<AdapterLocationLi
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull AdapterLocationList2.MyViewHolder holder, final int position) {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-
-        // -get element from your dataset at this position
-        // -replace the contents of the view with that element
         final String title = mylistvalues.get(position).getName();  // name variable of title
 
-
         holder.Name.setText(title);
-
 
 
         holder.Name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(view.getContext(), StoreMenu.class);
-                intent.putExtra("title", mylistvalues.get(position).getName());
+                Intent intent= new Intent(view.getContext(), HomeMenu.class);
+                intent.putExtra("StoreID", mylistvalues.get(position).getId());
                 view.getContext().startActivity(intent);
             }
         });
 
-
-
-
     }
-
-
-
 
     @Override
     public int getItemCount() {

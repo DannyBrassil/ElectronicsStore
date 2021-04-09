@@ -9,7 +9,9 @@ public class User {
     Address address;
 
 
-    public User() { }
+    public User() {
+
+    }
 
     public User(String email, String password, String fname, String num, Address address) {
         this.Email = email; this.password = password; this.firstName = fname;  this.number=num; this.address=address;

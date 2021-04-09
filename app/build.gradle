@@ -50,5 +50,5 @@ dependencies {
     implementation 'com.opencsv:opencsv:4.6'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
-
+    implementation 'com.google.firebase:firebase-storage'
 }

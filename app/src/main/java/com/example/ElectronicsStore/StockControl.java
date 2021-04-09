@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +35,7 @@ public class StockControl extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_menu);
+        setContentView(R.layout.activity_stock_control);
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -48,41 +50,31 @@ public class StockControl extends AppCompatActivity {
 
 
 
-        Button button = (Button) findViewById(R.id.addStarter);
+        Button button = (Button) findViewById(R.id.addItem);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                addStarter();
+                addItem();
             }
         });
 
 
-        Button button5 = (Button) findViewById(R.id.buttonFinishMenu);
-        button5.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(StockControl.this, Login.class);
-                startActivity(intent);
-            }
-        });
 
-        fireDB = FirebaseDatabase.getInstance().getReference().child("Restaurants").child(mUser.getUid()).child("Menu");
+
+        fireDB = FirebaseDatabase.getInstance().getReference().child("stores").child(mUser.getUid()).child("items");
 
         fireDB.addValueEventListener(new ValueEventListener() {
-
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {//every time change data the event listener
-                // will execute on datachange method for
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mAdapterStarter.clear();
+
                 for (DataSnapshot userSnapshot: snapshot.getChildren()) {
                     Item items= userSnapshot.getValue(Item.class);
 
+                    Log.i("name",""+items.getName());
                         mAdapterStarter.addItemtoend(items);
 
                 }
-
-
-
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -91,27 +83,32 @@ public class StockControl extends AppCompatActivity {
         });
 
 
+        // bottom nav menu
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.StoreStock);
+        //item selected listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.StoreStock:
+                        return true;
+                    case R.id.StoreCustomer:
+                        startActivity(new Intent(getApplicationContext(), StoreCustomers.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+
+                return false;
+            }
+        });
 
     }
 
-    private void addDrink() {
-        MenuDialog dialog = new MenuDialog("drink");
-        dialog.show(this.getSupportFragmentManager(),"item");
-    }
 
-    private void addDessert() {
-        MenuDialog dialog = new MenuDialog("dessert");
-        dialog.show(this.getSupportFragmentManager(),"item");
-    }
 
-    private void addMain() {
-
-        MenuDialog dialog = new MenuDialog("main");
-        dialog.show(this.getSupportFragmentManager(),"item");
-    }
-
-    private void addStarter() {
-        MenuDialog dialog = new MenuDialog("starter");
+    private void addItem() {
+        AddItemDialog dialog = new AddItemDialog();
         dialog.show(this.getSupportFragmentManager(),"item");
     }
 }

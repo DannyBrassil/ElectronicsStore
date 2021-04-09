@@ -3,6 +3,10 @@ package com.example.ElectronicsStore;
 public class Address {
     String line1, line2, line3, county;
 
+    public Address(){
+
+    }
+
     public Address(String line1, String line2, String line3, String county) {
         this.line1 = line1;
         this.line2 = line2;
