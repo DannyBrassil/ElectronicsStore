@@ -29,7 +29,7 @@ public class StockControl extends AppCompatActivity {
     DatabaseReference fireDB;
     final ArrayList<Item> myDataset= new ArrayList<Item>();
 
-    final AdapterLocationList mAdapterStarter= new AdapterLocationList(myDataset);
+    final AdapterLocationList mAdapterStarter= new AdapterLocationList(myDataset, "store",null);
 
 
     @Override

@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class AdapterLocationList2 extends RecyclerView.Adapter<AdapterLocationList2.MyViewHolder> {
@@ -44,7 +43,7 @@ public class AdapterLocationList2 extends RecyclerView.Adapter<AdapterLocationLi
     public AdapterLocationList2.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view –create a row –inflate the layout for the row
         LayoutInflater inflater= LayoutInflater.from(parent.getContext());
-        View itemView= inflater.inflate(R.layout.row_layout, parent, false);
+        View itemView= inflater.inflate(R.layout.store_row_layout, parent, false);
         MyViewHolder viewHolder= new MyViewHolder(itemView);
         return viewHolder;
     }

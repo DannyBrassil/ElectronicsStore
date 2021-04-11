@@ -94,7 +94,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
                         final String m =manufacturer.getText().toString();
                         final String d =description.getText().toString();
                         final int s =Integer.parseInt(stock.getText().toString());
-                        final Item item = new Item( n, p, c, m, d, s, null );
+
 
                         uploadImage();
 
@@ -103,7 +103,12 @@ public class AddItemDialog extends AppCompatDialogFragment {
 
                         DatabaseReference fireDB;
                         fireDB = FirebaseDatabase.getInstance().getReference();
-                        fireDB.child("stores").child(mUser.getUid()).child("items").push().setValue(item).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        DatabaseReference pushRef = fireDB.child("stores").child(mUser.getUid()).child("items").push();
+
+                         String id= pushRef.getKey();
+                        final Item item = new Item(id, n, p, c, m, d, s, null );
+
+                        pushRef.setValue(item).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 // Toast.makeText(this, "Write is successful", Toast.LENGTH_LONG).show();

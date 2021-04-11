@@ -36,7 +36,7 @@ public class StoreCustomers extends AppCompatActivity {
      String title;
 
     final ArrayList<Item> myDataset= new ArrayList<Item>();
-    final AdapterLocationList mAdapter= new AdapterLocationList(myDataset);
+    final AdapterLocationList mAdapter= new AdapterLocationList(myDataset, "customer",null);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -36,35 +36,14 @@
         <item>Wexford</item>
         <item>Wicklow</item>
     </string-array>
-    <string-array name="times">
-        <item>16:00</item>
-        <item>16:30</item>
-        <item>17:00</item>
-        <item>17:30</item>
-        <item>18:00</item>
-        <item>18:30</item>
-        <item>19:00</item>
-        <item>19:30</item>
-        <item>20:00</item>
-        <item>20:30</item>
-        <item>21:00</item>
-        <item>21:30</item>
-    </string-array>
-
-    <string-array name="days">
-        <item>16:00</item>
-        <item>16:30</item>
-        <item>17:00</item>
-        <item>17:30</item>
-        <item>18:00</item>
-        <item>18:30</item>
-        <item>19:00</item>
-        <item>19:30</item>
-        <item>20:00</item>
-        <item>20:30</item>
-        <item>21:00</item>
-        <item>21:30</item>
-
+    <string-array name="sorting_options">
+        <item>Sort by...</item>
+        <item>lowest price</item>
+        <item>highest price</item>
+        <item>Title ascending</item>
+        <item>Title descending</item>
+        <item>Manufacturer ascending</item>
+        <item>Manufacturer descending</item>
     </string-array>
 
 </resources>

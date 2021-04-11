@@ -25,6 +25,7 @@ import android.location.Location;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.TextView;
 
 
@@ -72,11 +73,11 @@ public class HomeMenu extends AppCompatActivity {
     DatabaseReference fireDB;
     public static TextView e1;
     public static ArrayList<Store> parsedRestaurants = new ArrayList<>();
-    final ArrayList<Store> myDataset= new ArrayList<Store>();
-    final AdapterLocationList2 mAdapter= new AdapterLocationList2(myDataset);
-    public static LatLng latLng;
-    String id;
+    final ArrayList<Item> myDataset= new ArrayList<>();
 
+    public static LatLng latLng;
+    String storeID;
+    AdapterLocationList mAdapter;
 
 
     //DatabaseReference fireDBUser = FirebaseDatabase.getInstance().getReference("carparks");
@@ -88,7 +89,7 @@ public class HomeMenu extends AppCompatActivity {
         setContentView(R.layout.activity_home_menu);
 
         Intent intent = getIntent();
-        id= intent.getStringExtra("StoreID");
+        storeID= intent.getStringExtra("StoreID");
 
         fireDB= FirebaseDatabase.getInstance().getReference("stores");
 
@@ -100,11 +101,11 @@ public class HomeMenu extends AppCompatActivity {
 
 
 
-        fireDB.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+        fireDB.child(storeID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Store store = snapshot.getValue(Store.class);
-                storename.setText(store.getName());
+               // storename.setText(store.getName());
 
             }
 
@@ -116,7 +117,7 @@ public class HomeMenu extends AppCompatActivity {
 
 
 
-
+        mAdapter= new AdapterLocationList(myDataset, "customer", storeID);
         RecyclerView mRecyclerView= (RecyclerView) findViewById(R.id.RV_Booking);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager= new LinearLayoutManager(this);
@@ -127,8 +128,9 @@ public class HomeMenu extends AppCompatActivity {
         recyclerView();
 
 
-       // bottom nav menu
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+
+                // bottom nav menu
+                BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         // home is selected
         bottomNavigationView.setSelectedItemId(R.id.home);
         //item selected listener
@@ -162,12 +164,12 @@ public class HomeMenu extends AppCompatActivity {
     private void recyclerView() {
 
 
-        fireDB.child(id).addValueEventListener(new ValueEventListener() {
+        fireDB.child(storeID).child("items").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {//every time change data the event listener
                 // will execute on datachange method for
                 for (DataSnapshot userSnapshot: snapshot.getChildren()) {
-                    Store r= userSnapshot.getValue(Store.class);
+                    Item r= userSnapshot.getValue(Item.class);
                     mAdapter.addItemtoend(r);
                 }
 

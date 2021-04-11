@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Item {
 
+    private String id;
     private String name;
     private double price;
     private String category;
@@ -14,7 +15,8 @@ public class Item {
 
     public Item(){ }
 
-    public Item( String name, double price, String category, String manufacturer, String description, int stock, ArrayList<Review> reviews) {
+    public Item(String id, String name, double price, String category, String manufacturer, String description, int stock, ArrayList<Review> reviews) {
+        this.id=id;
         this.name = name;
         this.price = price;
         this.category=category;
@@ -24,6 +26,13 @@ public class Item {
         this.reviews=reviews;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getCategory() {
         return category;

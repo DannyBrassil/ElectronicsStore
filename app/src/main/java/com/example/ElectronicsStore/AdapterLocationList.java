@@ -1,6 +1,7 @@
 package com.example.ElectronicsStore;
 
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 
 public class AdapterLocationList extends RecyclerView.Adapter<AdapterLocationList.MyViewHolder> {
     private ArrayList<Item> mylistvalues;
+    private String Person;
+    private String StoreID;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     DatabaseReference fireDB;
@@ -44,8 +47,11 @@ public class AdapterLocationList extends RecyclerView.Adapter<AdapterLocationLis
 
     //constructor of MyAdapterclass-Provide the dataset to the Adapter
     // myDataset is passed when called to create an adapter object
-    public AdapterLocationList(ArrayList<Item> myDataset) {
+    public AdapterLocationList(ArrayList<Item> myDataset, String person, String StoreID) {
         mylistvalues= myDataset;
+        this.Person=person;
+        this.StoreID=StoreID;
+
     }
 
     //Create new views (invoked by the layout manager)
@@ -75,6 +81,24 @@ public class AdapterLocationList extends RecyclerView.Adapter<AdapterLocationLis
         holder.Name.setText(title);
         holder.Price.setText("$ "+p);
 
+
+        holder.Name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Person.equals("customer")){
+                    Intent intent= new Intent(view.getContext(), ClickedItemCustomer.class);
+                    intent.putExtra("ItemID", mylistvalues.get(position).getId());
+                    intent.putExtra("StoreID", StoreID);
+                    view.getContext().startActivity(intent);
+                }else{
+
+
+                }
+
+              //  intent.putExtra("StoreID", mylistvalues.get(position).);
+              //  view.getContext().startActivity(intent);
+            }
+        });
 
 
     }
