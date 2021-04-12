@@ -16,6 +16,9 @@ import android.location.Location;
 
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
@@ -37,6 +40,7 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class HomeMenu extends AppCompatActivity {
@@ -59,6 +63,9 @@ public class HomeMenu extends AppCompatActivity {
     public static LatLng latLng;
 
     AdapterLocationList mAdapter;
+
+    final ArrayList<Item> items = new ArrayList<>();
+
 
 
     //DatabaseReference fireDBUser = FirebaseDatabase.getInstance().getReference("carparks");
@@ -105,7 +112,7 @@ public class HomeMenu extends AppCompatActivity {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
 
-        recyclerView();
+        populateRecyclerView();
 
 
 
@@ -131,6 +138,55 @@ public class HomeMenu extends AppCompatActivity {
         });
 
 
+        final Spinner sortBySpinner = (Spinner)findViewById(R.id.spinner);
+        sortBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Context context;
+                switch (position){
+                    case 1://sort by cheapest
+                        Log.i("items size", ""+items.size());
+                        //call class that sorts carparks in ascending price
+                         context = new Context(new SortByPrice());
+                        recyclerView(context.executeStrategy(items));
+                        break;
+                    case 2://sort by expensive
+                         context = new Context(new SortByPrice());
+                        ArrayList<Item> expensive = context.executeStrategy(items);
+                        Collections.reverse(expensive);
+                        recyclerView(expensive);
+                        break;
+                    case 3://sort by title ascending
+                        context = new Context(new SortByTitle());
+                        recyclerView(context.executeStrategy(items));
+                        break;
+                    case 4://sort by title descending
+                        context = new Context(new SortByTitle());
+                        ArrayList<Item> title = context.executeStrategy(items);
+                        Collections.reverse(title);
+                        recyclerView(title);
+                        break;
+                    case 5://sort by manufacturer ascending
+                        context = new Context(new SortByManufacturer());
+                        recyclerView(context.executeStrategy(items));
+                        break;
+                    case 6://sort by title descending
+                        context = new Context(new SortByTitle());
+                        ArrayList<Item> manufacturer = context.executeStrategy(items);
+                        Collections.reverse(manufacturer);
+                        recyclerView(manufacturer);
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
     }
 
@@ -139,9 +195,7 @@ public class HomeMenu extends AppCompatActivity {
 
 
 
-
-
-    private void recyclerView() {
+    private void populateRecyclerView(){
 
 
         fireDB.child("items").addValueEventListener(new ValueEventListener() {
@@ -150,9 +204,9 @@ public class HomeMenu extends AppCompatActivity {
                 // will execute on datachange method for
                 for (DataSnapshot userSnapshot: snapshot.getChildren()) {
                     Item r= userSnapshot.getValue(Item.class);
-                    mAdapter.addItemtoend(r);
+                    items.add(r);
                 }
-
+                recyclerView(items);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -161,7 +215,15 @@ public class HomeMenu extends AppCompatActivity {
         });
 
 
+    }
 
+
+
+    private void recyclerView(ArrayList<Item> items) {
+        mAdapter.clear();
+        for(int i = 0; i<items.size(); i++){
+            mAdapter.addItemtoend(items.get(i));
+        }
     }
 
 
