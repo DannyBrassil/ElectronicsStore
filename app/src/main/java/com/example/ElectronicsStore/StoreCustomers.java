@@ -36,7 +36,7 @@ public class StoreCustomers extends AppCompatActivity {
      String title;
 
     final ArrayList<Item> myDataset= new ArrayList<Item>();
-    final AdapterLocationList mAdapter= new AdapterLocationList(myDataset, "customer",null);
+    final AdapterLocationList mAdapter= new AdapterLocationList(myDataset, "customer");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +144,7 @@ public class StoreCustomers extends AppCompatActivity {
         db= FirebaseDatabase.getInstance().getReference(); // get reference from roo
         FirebaseUser user = mAuth.getCurrentUser();
         String uid = user.getUid();
-        Purchase b = new Purchase();
+        Order b = new Order();
 
         db.child("Users").child(uid).child("Booking").push().setValue(b).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

@@ -14,12 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ClickedItemCustomer"></activity>
-        <activity android:name=".ChooseStore" />
-        <activity android:name=".Profile" />
+        <activity android:name=".Cart" />
         <activity android:name=".StoreCustomers" />
         <activity android:name=".AddItemDialog" />
         <activity android:name=".StockControl" />
-        <activity android:name=".SignUpStore" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

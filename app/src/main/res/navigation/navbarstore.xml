@@ -13,7 +13,7 @@
         tools:layout="@layout/activity_stock_control" />
     <activity
         android:id="@+id/StoreCustomer"
-        android:name="com.example.ElectronicsStore.Profile"
+        android:name="com.example.ElectronicsStore.Cart"
         android:label="activity_profile"
         tools:layout="@layout/activity_store_customers" />
 

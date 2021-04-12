@@ -49,19 +49,10 @@ public class Login extends AppCompatActivity {
             }
         });
         //signup button
-        Button button3 = (Button) findViewById(R.id.signUpRestaurant);
-        button3.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                signupRestaurant();
-            }
-        });
+
     }
 
-    private void signupRestaurant() {
-        Intent intent = new Intent(Login.this, SignUpStore.class);
-        startActivity(intent);
-    }
+
 
     public void signup(){
         Intent intent = new Intent(Login.this, SignUp.class);
@@ -90,7 +81,7 @@ public class Login extends AppCompatActivity {
                                         User user = snapshot2.getValue(User.class);
                                         if(email.equals(user.getEmail())){
                                             //if email is in users direct to the user homepage
-                                            Intent intent = new Intent(Login.this, ChooseStore.class);
+                                            Intent intent = new Intent(Login.this, HomeMenu.class);
                                             intent.putExtra("username",user.getEmail());
                                             startActivity(intent);
                                         }
@@ -104,20 +95,20 @@ public class Login extends AppCompatActivity {
                             });
 
                             //check if email is in store database
-                            DatabaseReference dbcarparks;
-                            dbcarparks= FirebaseDatabase.getInstance().getReference("stores");
-                            dbcarparks.addListenerForSingleValueEvent(new ValueEventListener() {
+                            DatabaseReference dbStore;
+                            dbStore= FirebaseDatabase.getInstance().getReference("store");
+                            dbStore.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    for (DataSnapshot snapshot2 : snapshot.getChildren()) {
-                                        Store c = snapshot2.getValue(Store.class);
+
+                                        Store c = snapshot.getValue(Store.class);
                                         if(email.equals(c.getEmail())){
                                             //if email is in carparks direct to the carpark homepage
                                             Intent intent = new Intent(Login.this, StockControl.class);
                                             intent.putExtra("username",c.getEmail());
                                             startActivity(intent);
                                         }
-                                    }
+
                                 }
 
                                 @Override

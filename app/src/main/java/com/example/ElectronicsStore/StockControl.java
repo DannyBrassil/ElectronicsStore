@@ -29,7 +29,7 @@ public class StockControl extends AppCompatActivity {
     DatabaseReference fireDB;
     final ArrayList<Item> myDataset= new ArrayList<Item>();
 
-    final AdapterLocationList mAdapterStarter= new AdapterLocationList(myDataset, "store",null);
+    final AdapterLocationList mAdapterStarter= new AdapterLocationList(myDataset, "store");
 
 
     @Override
@@ -61,7 +61,7 @@ public class StockControl extends AppCompatActivity {
 
 
 
-        fireDB = FirebaseDatabase.getInstance().getReference().child("stores").child(mUser.getUid()).child("items");
+        fireDB = FirebaseDatabase.getInstance().getReference().child("store").child("items");
 
         fireDB.addValueEventListener(new ValueEventListener() {
             @Override

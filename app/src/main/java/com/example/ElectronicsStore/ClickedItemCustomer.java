@@ -30,7 +30,6 @@ public class ClickedItemCustomer extends AppCompatActivity {
         setContentView(R.layout.activity_clicked_item_customer);
         final Intent intent = getIntent();
         final String itemID = intent.getStringExtra("ItemID");
-        final String storeID = intent.getStringExtra("StoreID");
 
         final TextView name = findViewById(R.id.ClickedItemName);
         final TextView category = findViewById(R.id.ClickedItemCategory);
@@ -43,7 +42,7 @@ public class ClickedItemCustomer extends AppCompatActivity {
 
 
 
-        fireDB= FirebaseDatabase.getInstance().getReference("stores").child(storeID).child("items").child(itemID);
+        fireDB= FirebaseDatabase.getInstance().getReference("store").child("items").child(itemID);
         fireDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

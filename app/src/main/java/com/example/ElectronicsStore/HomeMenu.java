@@ -1,50 +1,31 @@
 package com.example.ElectronicsStore;
 
-import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.widget.TextView;
 
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -76,7 +57,7 @@ public class HomeMenu extends AppCompatActivity {
     final ArrayList<Item> myDataset= new ArrayList<>();
 
     public static LatLng latLng;
-    String storeID;
+
     AdapterLocationList mAdapter;
 
 
@@ -89,9 +70,8 @@ public class HomeMenu extends AppCompatActivity {
         setContentView(R.layout.activity_home_menu);
 
         Intent intent = getIntent();
-        storeID= intent.getStringExtra("StoreID");
 
-        fireDB= FirebaseDatabase.getInstance().getReference("stores");
+        fireDB= FirebaseDatabase.getInstance().getReference("store");
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -101,7 +81,7 @@ public class HomeMenu extends AppCompatActivity {
 
 
 
-        fireDB.child(storeID).addListenerForSingleValueEvent(new ValueEventListener() {
+        fireDB.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Store store = snapshot.getValue(Store.class);
@@ -117,7 +97,7 @@ public class HomeMenu extends AppCompatActivity {
 
 
 
-        mAdapter= new AdapterLocationList(myDataset, "customer", storeID);
+        mAdapter= new AdapterLocationList(myDataset, "customer");
         RecyclerView mRecyclerView= (RecyclerView) findViewById(R.id.RV_Booking);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager= new LinearLayoutManager(this);
@@ -141,7 +121,7 @@ public class HomeMenu extends AppCompatActivity {
                     case R.id.home:
                         return true;
                     case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), Profile.class));
+                        startActivity(new Intent(getApplicationContext(), Cart.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
@@ -164,7 +144,7 @@ public class HomeMenu extends AppCompatActivity {
     private void recyclerView() {
 
 
-        fireDB.child(storeID).child("items").addValueEventListener(new ValueEventListener() {
+        fireDB.child("items").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {//every time change data the event listener
                 // will execute on datachange method for

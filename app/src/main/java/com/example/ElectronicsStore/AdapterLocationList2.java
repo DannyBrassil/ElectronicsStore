@@ -63,7 +63,6 @@ public class AdapterLocationList2 extends RecyclerView.Adapter<AdapterLocationLi
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(view.getContext(), HomeMenu.class);
-                intent.putExtra("StoreID", mylistvalues.get(position).getId());
                 view.getContext().startActivity(intent);
             }
         });

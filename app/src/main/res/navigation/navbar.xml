@@ -13,8 +13,8 @@
         tools:layout="@layout/activity_home_menu" />
     <activity
         android:id="@+id/profile"
-        android:name="com.example.ElectronicsStore.Profile"
+        android:name="com.example.ElectronicsStore.Cart"
         android:label="activity_profile"
-        tools:layout="@layout/activity_profile" />
+        tools:layout="@layout/activity_cart" />
 
 </navigation>

@@ -103,7 +103,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
 
                         DatabaseReference fireDB;
                         fireDB = FirebaseDatabase.getInstance().getReference();
-                        DatabaseReference pushRef = fireDB.child("stores").child(mUser.getUid()).child("items").push();
+                        DatabaseReference pushRef = fireDB.child("store").child("items").push();
 
                          String id= pushRef.getKey();
                         final Item item = new Item(id, n, p, c, m, d, s, null );
@@ -159,7 +159,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
             progressDialog.show();
 
 
-            String childref="images/bookings/"+mUser.getUid();
+            String childref="images/store/";
             Log.i("ref",childref);
             // Defining the child of storageReference
             StorageReference ref = storageReference.child(childref);

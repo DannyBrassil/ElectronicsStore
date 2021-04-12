@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Store {
 
-    private String id;
     private String email;
     private String password;
     private String name;
@@ -14,21 +13,13 @@ public class Store {
 
     }
 
-    public Store(String id, String e, String p, String name ) {
-        this.id=id;
+    public Store(String e, String p, String name ) {
+
         this.email=e;
         this.password=p;
         this.name = name;
 
 
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getEmail() {

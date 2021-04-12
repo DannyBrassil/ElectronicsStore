@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class AdapterLocationList extends RecyclerView.Adapter<AdapterLocationList.MyViewHolder> {
     private ArrayList<Item> mylistvalues;
     private String Person;
-    private String StoreID;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     DatabaseReference fireDB;
@@ -47,10 +46,9 @@ public class AdapterLocationList extends RecyclerView.Adapter<AdapterLocationLis
 
     //constructor of MyAdapterclass-Provide the dataset to the Adapter
     // myDataset is passed when called to create an adapter object
-    public AdapterLocationList(ArrayList<Item> myDataset, String person, String StoreID) {
+    public AdapterLocationList(ArrayList<Item> myDataset, String person) {
         mylistvalues= myDataset;
         this.Person=person;
-        this.StoreID=StoreID;
 
     }
 
@@ -88,7 +86,6 @@ public class AdapterLocationList extends RecyclerView.Adapter<AdapterLocationLis
                 if(Person.equals("customer")){
                     Intent intent= new Intent(view.getContext(), ClickedItemCustomer.class);
                     intent.putExtra("ItemID", mylistvalues.get(position).getId());
-                    intent.putExtra("StoreID", StoreID);
                     view.getContext().startActivity(intent);
                 }else{
 
