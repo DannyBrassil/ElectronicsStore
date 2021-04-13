@@ -25,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Cart extends AppCompatActivity {
      FirebaseAuth mAuth;
@@ -83,7 +85,9 @@ public class Cart extends AppCompatActivity {
                             items.add(item);
                             price=price+item.getPrice();
                         }
-                        Order order = new Order(price,items);
+                        Date today = new Date();
+                        today= Calendar.getInstance().getTime();
+                        Order order = new Order(price,items,today);
                         fireDBOrders.push().setValue(order);
                     }
 

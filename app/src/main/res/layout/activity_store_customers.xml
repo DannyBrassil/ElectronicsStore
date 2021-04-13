@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/customers"
+        android:id="@+id/orderItems"
         android:layout_width="355dp"
         android:layout_height="494dp"
         android:layout_marginStart="12dp"

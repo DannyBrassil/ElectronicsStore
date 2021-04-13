@@ -8,14 +8,17 @@ public class Order {
 
     private double price;
     private ArrayList<Item> items;
+    Date date;
+
 
     public Order(){
 
     }
 
-    public Order(double price, ArrayList<Item> items) {
+    public Order(double price, ArrayList<Item> items,  Date d) {
         this.price = price;
         this.items = items;
+        this.date =d;
     }
 
     public double getPrice() {
@@ -32,5 +35,13 @@ public class Order {
 
     public void setItems(ArrayList<Item> items) {
         this.items = items;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
