@@ -9,48 +9,23 @@
 
     <View
         android:id="@+id/view14"
-        android:layout_width="323dp"
-        android:layout_height="201dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
+        android:layout_width="380dp"
+        android:layout_height="541dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/white_form"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="147dp" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginLeft="76dp"
-        android:text="Items"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="162dp" />
-
-    <Button
-        android:id="@+id/gotocart"
-        android:layout_width="163dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="124dp"
-        android:layout_marginLeft="124dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/login_round_white"
-        android:text="go to cart"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/BookingRestaurantName" />
 
     <TextView
         android:id="@+id/BookingRestaurantName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="28dp"
+        android:text="Customers"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -58,12 +33,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/menu_RV"
-        android:layout_width="274dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="48dp"
+        android:id="@+id/customers"
+        android:layout_width="355dp"
+        android:layout_height="494dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="@+id/view14"
         app:layout_constraintTop_toTopOf="@+id/view14" />
 

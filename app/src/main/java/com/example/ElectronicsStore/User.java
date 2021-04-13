@@ -1,6 +1,7 @@
 package com.example.ElectronicsStore;
 
 public class User {
+    private String id;
     private String Email;
     private String password;
     private String firstName;
@@ -13,10 +14,17 @@ public class User {
 
     }
 
-    public User(String email, String password, String fname, String num, Address address) {
-        this.Email = email; this.password = password; this.firstName = fname;  this.number=num; this.address=address;
+    public User(String id,String email, String password, String fname, String num, Address address) {
+        this.id=id;this.Email = email; this.password = password; this.firstName = fname;  this.number=num; this.address=address;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getFirstName() { return firstName; }
 

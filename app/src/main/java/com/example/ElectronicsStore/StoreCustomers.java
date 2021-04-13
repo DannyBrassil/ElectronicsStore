@@ -35,8 +35,8 @@ public class StoreCustomers extends AppCompatActivity {
     DatabaseReference fireDB;
      String title;
 
-    final ArrayList<Item> myDataset= new ArrayList<Item>();
-    final AdapterLocationList mAdapter= new AdapterLocationList(myDataset, "customer");
+    final ArrayList<User> myDataset= new ArrayList<>();
+    final AdapterLocationList2 mAdapter= new AdapterLocationList2(myDataset);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class StoreCustomers extends AppCompatActivity {
 
 
 
-        RecyclerView mRecyclerView= (RecyclerView) findViewById(R.id.menu_RV);
+        RecyclerView mRecyclerView= (RecyclerView) findViewById(R.id.customers);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager= new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -66,13 +66,6 @@ public class StoreCustomers extends AppCompatActivity {
 
         recyclerView();
 
-        Button button = (Button) findViewById(R.id.gotocart);
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                MakePuchase();
-            }
-        });
 
         // bottom nav menu
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -97,42 +90,18 @@ public class StoreCustomers extends AppCompatActivity {
     }
 
     private void recyclerView() {
-        fireDB = FirebaseDatabase.getInstance().getReference().child("Restaurants");
+        fireDB = FirebaseDatabase.getInstance().getReference().child("users");
 
         fireDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {//every time change data the event listener
                 // will execute on datachange method for
-                for (final DataSnapshot userSnapshot : snapshot.getChildren()) {
-                    Store r = userSnapshot.getValue(Store.class);
-                    String key = userSnapshot.getKey();
-
-                    if(r.getName().equalsIgnoreCase(title)){
-                        fireDB.child(key).child("Menu").addValueEventListener(new ValueEventListener() {
-
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {//every time change data the event listener
-                                // will execute on datachange method for
-                                for (DataSnapshot userSnapshot: snapshot.getChildren()) {
-                                    Item items= userSnapshot.getValue(Item.class);
-                                    // myDataset.add(notes);
-                                        mAdapter.addItemtoend(items);
-                                }
-
-
-
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Log.w("DBError", "Cancel Access DB");
-                            }
-                        });
-
-
+                for ( DataSnapshot userSnapshot : snapshot.getChildren()) {
+                    User user = userSnapshot.getValue(User.class);
+                    mAdapter.addItemtoend(user);
                     }
 
                 }
-            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w("DBError", "Cancel Access DB");
@@ -140,28 +109,7 @@ public class StoreCustomers extends AppCompatActivity {
         });
     }
 
-    private void MakePuchase() {
-        db= FirebaseDatabase.getInstance().getReference(); // get reference from roo
-        FirebaseUser user = mAuth.getCurrentUser();
-        String uid = user.getUid();
-        Order b = new Order();
 
-        db.child("Users").child(uid).child("Booking").push().setValue(b).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(StoreCustomers.this, "Booking is successful", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(StoreCustomers.this, HomeMenu.class);
-                startActivity(intent);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(StoreCustomers.this, "Booking is not successful", Toast.LENGTH_LONG).show();
-            }
-        });
-
-
-    }
 
 
 }

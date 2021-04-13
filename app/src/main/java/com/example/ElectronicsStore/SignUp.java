@@ -121,10 +121,12 @@ public class SignUp extends AppCompatActivity {
 
                             //add user to realtime database
                             db= FirebaseDatabase.getInstance().getReference(); // get reference from root
+                            DatabaseReference keyRef = db.push();
+                            String key = keyRef.getKey();
 
                             Address address = new Address(addressLine1, addressLine2, addressLine3, county);
 
-                            User person = new User(email, password, firstname, number, address);
+                            User person = new User(uid, email, password, firstname, number, address);
 
                             db.child("users").child(uid).setValue(person).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

@@ -147,7 +147,6 @@ public class HomeMenu extends AppCompatActivity {
                 switch (position){
                     case 1://sort by cheapest
                         Log.i("items size", ""+items.size());
-                        //call class that sorts carparks in ascending price
                          context = new Context(new SortByPrice());
                         recyclerView(context.executeStrategy(items));
                         break;
@@ -177,7 +176,6 @@ public class HomeMenu extends AppCompatActivity {
                         Collections.reverse(manufacturer);
                         recyclerView(manufacturer);
                         break;
-
                 }
             }
 
