@@ -52,8 +52,8 @@ public class ClickedOrderDialog extends AppCompatDialogFragment {
         //Bundle args = intent.getBundleExtra("BUNDLE");
         //ArrayList<Object> object = (ArrayList<Object>) args.getSerializable("ARRAYLIST");
 
-        mAdapter= new AdapterLocationList(myDataset, "customer");
-        RecyclerView mRecyclerView= (RecyclerView) view.findViewById(R.id.RV_Booking);
+        mAdapter= new AdapterLocationList(myDataset, "notcustomer");
+        RecyclerView mRecyclerView= (RecyclerView) getView().findViewById(R.id.orderItems);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager= new LinearLayoutManager(view.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);

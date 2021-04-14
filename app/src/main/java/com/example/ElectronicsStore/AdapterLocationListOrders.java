@@ -82,7 +82,7 @@ public class AdapterLocationListOrders extends RecyclerView.Adapter<AdapterLocat
             @Override
             public void onClick(View view) {
              //   Toast.makeText(view.getContext(), title, Toast.LENGTH_LONG).show();
-                AddItemDialog dialog = new AddItemDialog();
+                ClickedOrderDialog dialog = new ClickedOrderDialog();
 
 
                 Bundle args = new Bundle();
