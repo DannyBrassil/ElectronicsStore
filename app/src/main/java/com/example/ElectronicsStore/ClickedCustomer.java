@@ -30,7 +30,7 @@ public class ClickedCustomer extends AppCompatActivity {
         setContentView(R.layout.activity_clicked_customer);
         Intent i = getIntent();
         String id = i.getStringExtra("CustomerID");
-Log.i("Customer",id);
+
         fireDB = FirebaseDatabase.getInstance().getReference();
 
         final TextView email = findViewById(R.id.clickedCustomerEmail);
@@ -46,7 +46,7 @@ Log.i("Customer",id);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
 
-        recyclerView(id);
+
 
 
 
@@ -58,6 +58,7 @@ Log.i("Customer",id);
                email.setText(user.getEmail());
                number.setText(user.getNumber());
                address.setText(user.address.getLine1()+", \n"+user.address.getLine2()+", \n"+user.address.getLine3()+", \n"+user.address.getCounty());
+                recyclerView(user.getId());
             }
 
 
@@ -73,11 +74,15 @@ Log.i("Customer",id);
     }
 
     private void recyclerView(String id) {
-        fireDB.child("users").child(id).child("orders").addListenerForSingleValueEvent(new ValueEventListener() {
+        fireDB.child("users").child(id).child("orders").addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            Order order = snapshot.getValue(Order.class);
-            mAdapter.addItemtoend(order);
+            for(DataSnapshot snapshot1: snapshot.getChildren()){
+                Order order = snapshot1.getValue(Order.class);
+                mAdapter.addItemtoend(order);
+            }
+
+
         }
         @Override
         public void onCancelled(@NonNull DatabaseError error) {

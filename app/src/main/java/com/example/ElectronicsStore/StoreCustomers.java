@@ -43,8 +43,7 @@ public class StoreCustomers extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        TextView t1 = (TextView) findViewById(R.id.BookingRestaurantName);
-        t1.setText(title);
+
 
 
 

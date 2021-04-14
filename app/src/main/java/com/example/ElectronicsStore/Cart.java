@@ -31,7 +31,6 @@ import java.util.Date;
 public class Cart extends AppCompatActivity {
      FirebaseAuth mAuth;
      FirebaseUser mUser;
-    DatabaseReference fireDB;
     DatabaseReference fireDBOrders;
     final ArrayList<Item> myDataset= new ArrayList<>();
     AdapterLocationList mAdapter;
@@ -48,7 +47,7 @@ public class Cart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        fireDB = FirebaseDatabase.getInstance().getReference();
+
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -76,6 +75,12 @@ public class Cart extends AppCompatActivity {
             @Override
             public void onClick(View v){
 
+                DatabaseReference fireDB;
+                fireDB = FirebaseDatabase.getInstance().getReference();
+                final DatabaseReference pushRef = fireDB.child("users").child(mUser.getUid()).child("orders").push();
+
+                final String id= pushRef.getKey();
+
 
                 fireDB.child("users").child(mUser.getUid()).child("cart").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -87,8 +92,8 @@ public class Cart extends AppCompatActivity {
                         }
                         Date today = new Date();
                         today= Calendar.getInstance().getTime();
-                        Order order = new Order(price,items,today);
-                        fireDBOrders.push().setValue(order);
+                        Order order = new Order(id,price,items,today);
+                        pushRef.setValue(order);
                     }
 
                     @Override
@@ -139,7 +144,8 @@ public class Cart extends AppCompatActivity {
     }
 
     private void recyclerView() {
-
+        DatabaseReference fireDB;
+        fireDB = FirebaseDatabase.getInstance().getReference();
         fireDB.child("users").child(mUser.getUid()).child("cart").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {//every time change data the event listener

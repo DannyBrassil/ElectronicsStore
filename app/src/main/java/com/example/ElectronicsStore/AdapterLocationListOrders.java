@@ -72,12 +72,12 @@ public class AdapterLocationListOrders extends RecyclerView.Adapter<AdapterLocat
         // -get element from your dataset at this position
         // -replace the contents of the view with that element
         final double price = mylistvalues.get(position).getPrice();  // name variable of title
-       // final Date date = mylistvalues.get(position).getDate();  // name variable of date
-       // Log.i("Date",""+price);
+        final Date date = mylistvalues.get(position).getDate();  // name variable of date
+        Log.i("Date",""+price);
         final ArrayList<Item> items = mylistvalues.get(position).getItems();
-      //  final String d = new SimpleDateFormat("dd-MM-yyyy").format(date);
-      //  holder.date.setText(d);
-        holder.price.setText(String.valueOf(price));
+        final String d = new SimpleDateFormat("dd-MM-yyyy").format(date);
+        holder.date.setText(d);
+        holder.price.setText("$"+String.valueOf(price));
         holder.date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

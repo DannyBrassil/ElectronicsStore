@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Order {
 
-
+private String id;
     private double price;
     private ArrayList<Item> items;
     Date date;
@@ -15,10 +15,19 @@ public class Order {
 
     }
 
-    public Order(double price, ArrayList<Item> items,  Date d) {
+    public Order(String id, double price, ArrayList<Item> items,  Date d) {
+       this.id=id;
         this.price = price;
         this.items = items;
         this.date =d;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public double getPrice() {
