@@ -87,8 +87,13 @@ public class AdapterLocationList extends RecyclerView.Adapter<AdapterLocationLis
                     Intent intent= new Intent(view.getContext(), ClickedItemCustomer.class);
                     intent.putExtra("ItemID", mylistvalues.get(position).getId());
                     view.getContext().startActivity(intent);
-                }else{
+                }else if (Person.equals("store")){
+                    Intent intent= new Intent(view.getContext(), ClickedItemStore.class);
+                    intent.putExtra("ItemID", mylistvalues.get(position).getId());
+                    view.getContext().startActivity(intent);
 
+                }
+                else{
 
                 }
 

@@ -53,7 +53,7 @@ public class ClickedOrderDialog extends AppCompatDialogFragment {
         //ArrayList<Object> object = (ArrayList<Object>) args.getSerializable("ARRAYLIST");
 
         mAdapter= new AdapterLocationList(myDataset, "notcustomer");
-        RecyclerView mRecyclerView= (RecyclerView) getView().findViewById(R.id.orderItems);
+        RecyclerView mRecyclerView= (RecyclerView) view.findViewById(R.id.orderItems);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager= new LinearLayoutManager(view.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);

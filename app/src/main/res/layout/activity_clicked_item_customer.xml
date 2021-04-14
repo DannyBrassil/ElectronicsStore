@@ -67,7 +67,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ClickedItemManufacturer" />
 
     <ImageView
-        android:id="@+id/ClickedItemImage"
+        android:id="@+id/itemImage2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
@@ -78,7 +78,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/AddToCartButton"
+        android:id="@+id/UpdateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
@@ -86,5 +86,5 @@
         android:layout_marginTop="92dp"
         android:text="Add to cart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ClickedItemImage" />
+        app:layout_constraintTop_toBottomOf="@+id/itemImage2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

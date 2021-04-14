@@ -60,7 +60,7 @@ public class ClickedItemCustomer extends AppCompatActivity {
             }
         });
 
-        Button addTocart = findViewById(R.id.AddToCartButton);
+        Button addTocart = findViewById(R.id.UpdateButton);
         addTocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
