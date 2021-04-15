@@ -106,7 +106,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
                         DatabaseReference pushRef = fireDB.child("store").child("items").push();
 
                          String id= pushRef.getKey();
-                        final Item item = new Item(id, n, p, c, m, d, s, null );
+                        final Item item = new Item(id, n, p, c, m, d, s );
 
                         pushRef.setValue(item).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

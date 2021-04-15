@@ -1,8 +1,6 @@
 package com.example.ElectronicsStore;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,21 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -53,7 +42,7 @@ public class ClickedOrderDialog extends AppCompatDialogFragment {
         //ArrayList<Object> object = (ArrayList<Object>) args.getSerializable("ARRAYLIST");
 
         mAdapter= new AdapterLocationList(myDataset, "notcustomer");
-        RecyclerView mRecyclerView= (RecyclerView) view.findViewById(R.id.orderItems);
+        RecyclerView mRecyclerView= (RecyclerView) view.findViewById(R.id.reviews);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager= new LinearLayoutManager(view.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -80,11 +69,8 @@ public class ClickedOrderDialog extends AppCompatDialogFragment {
     }
 
     private void recyclerView() {
-
                 for(int i =0; i<items.size();i++) {
                     mAdapter.addItemtoend(items.get(i));
                 }
-
-
     }
 }

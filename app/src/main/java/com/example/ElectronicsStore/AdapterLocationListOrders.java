@@ -1,26 +1,18 @@
 package com.example.ElectronicsStore;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -40,8 +32,8 @@ public class AdapterLocationListOrders extends RecyclerView.Adapter<AdapterLocat
 
         public MyViewHolder(View itemView){
             super(itemView);
-            date=(TextView) itemView.findViewById(R.id.DateOfOrder);
-            price=(TextView) itemView.findViewById(R.id.PriceOfOrder);
+            date=(TextView) itemView.findViewById(R.id.CommentOfRating);
+            price=(TextView) itemView.findViewById(R.id.RatingOfReview);
         }
     }
 

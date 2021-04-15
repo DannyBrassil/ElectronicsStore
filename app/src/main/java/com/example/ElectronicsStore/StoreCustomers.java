@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,7 +50,7 @@ public class StoreCustomers extends AppCompatActivity {
 
 
 
-        RecyclerView mRecyclerView= (RecyclerView) findViewById(R.id.orderItems);
+        RecyclerView mRecyclerView= (RecyclerView) findViewById(R.id.reviews);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager= new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);

@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ClickedItemStore"></activity>
+        <activity android:name=".allReviewsDialog"></activity>
+        <activity android:name=".ClickedItemStore" />
         <activity android:name=".ClickedOrderDialog" />
         <activity android:name=".ClickedCustomer" />
         <activity android:name=".ClickedItemCustomer" />

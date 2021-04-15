@@ -34,8 +34,8 @@ public class AdapterLocationList extends RecyclerView.Adapter<AdapterLocationLis
 
         public MyViewHolder(View itemView){
             super(itemView);
-            Name=(TextView) itemView.findViewById(R.id.DateOfOrder);
-            Price=(TextView) itemView.findViewById(R.id.PriceOfOrder);
+            Name=(TextView) itemView.findViewById(R.id.CommentOfRating);
+            Price=(TextView) itemView.findViewById(R.id.RatingOfReview);
 
 
 
