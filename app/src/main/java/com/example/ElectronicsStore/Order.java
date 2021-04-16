@@ -53,4 +53,8 @@ private String id;
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public void applyDiscount(float discount) {
+        this.price = price * (1F - discount);
+    }
 }

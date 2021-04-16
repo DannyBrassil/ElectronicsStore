@@ -45,30 +45,17 @@ import java.util.Collections;
 
 public class HomeMenu extends AppCompatActivity {
 
-    private GoogleMap mMap;
-    private GoogleApiClient googleApiClient;
-    private LocationRequest locationRequest;
-    private Location lastLocation;
-    private Marker currentUserLocationMarker;
-    private static final int Request_User_Location_Code = 99;
-    public static SupportMapFragment mapFragment;
-    FusedLocationProviderClient client;
+
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     DatabaseReference fireDB;
-    public static TextView e1;
-    public static ArrayList<Store> parsedRestaurants = new ArrayList<>();
     final ArrayList<Item> myDataset= new ArrayList<>();
 
-    public static LatLng latLng;
 
     AdapterLocationList mAdapter;
 
     final ArrayList<Item> items = new ArrayList<>();
 
-
-
-    //DatabaseReference fireDBUser = FirebaseDatabase.getInstance().getReference("carparks");
 
     @SuppressLint("StaticFieldLeak")
     @Override
