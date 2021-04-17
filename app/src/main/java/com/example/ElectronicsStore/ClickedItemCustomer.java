@@ -9,16 +9,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +32,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -34,6 +42,9 @@ public class ClickedItemCustomer extends AppCompatActivity {
     private FirebaseUser mUser;
     DatabaseReference fireDB;
     DatabaseReference fireDBUser;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    Bitmap bm;
     Item item;
     int stars=0;
 
@@ -82,7 +93,7 @@ public class ClickedItemCustomer extends AppCompatActivity {
                 category.setText(item.getCategory());
                 price.setText("$"+Double.toString(item.getPrice()));
                 manufacturer.setText(item.getManufacturer());
-
+                setImage(itemID);
             }
 
             @Override
@@ -91,18 +102,52 @@ public class ClickedItemCustomer extends AppCompatActivity {
             }
         });
 
+
+
         Button addTocart = findViewById(R.id.UpdateButton);
         addTocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fireDBUser= FirebaseDatabase.getInstance().getReference("users").child(UserID);
-
                 fireDBUser.child("cart").push().setValue(item);
+                Toast.makeText(ClickedItemCustomer.this, "Item added to cart", Toast.LENGTH_LONG);
+                startActivity(new Intent(ClickedItemCustomer.this, HomeMenu.class));
 
             }
         });
 
 
+    }
+
+    private void setImage(String itemID) {
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+
+        final ImageView imageView = (ImageView)findViewById(R.id.itemImage2);
+        String childref = "images/store/" + itemID;
+
+        StorageReference ref = storageReference.child(childref);
+
+        final long ONE_MEGABYTE = 1024 * 1024;
+        ref.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                DisplayMetrics dm = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+                imageView.setImageBitmap(bm);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+
+            }
+
+        });
     }
 
     private void seeReviews(String itemID) {

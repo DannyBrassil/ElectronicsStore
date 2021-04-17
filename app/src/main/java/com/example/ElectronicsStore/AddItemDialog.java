@@ -96,7 +96,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
                         final int s =Integer.parseInt(stock.getText().toString());
 
 
-                        uploadImage();
+
 
                         FirebaseAuth mAuth = FirebaseAuth.getInstance();
                         FirebaseUser mUser = mAuth.getCurrentUser();
@@ -106,6 +106,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
                         DatabaseReference pushRef = fireDB.child("store").child("items").push();
 
                          String id= pushRef.getKey();
+                         uploadImage(id);
                         final Item item = new Item(id, n, p, c, m, d, s );
 
                         pushRef.setValue(item).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -145,7 +146,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
         }
     }
 
-    private void uploadImage() {
+    private void uploadImage(String id) {
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -153,13 +154,13 @@ public class AddItemDialog extends AppCompatDialogFragment {
         if (bitmap != null) {
 
             // Code for showing progressDialog while uploading
-            ProgressDialog progressDialog
+            final ProgressDialog progressDialog
                     = new ProgressDialog(this.getContext());
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
 
 
-            String childref="images/store/";
+            String childref="images/store/"+id;
             Log.i("ref",childref);
             // Defining the child of storageReference
             StorageReference ref = storageReference.child(childref);
@@ -182,6 +183,7 @@ public class AddItemDialog extends AppCompatDialogFragment {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
                     //Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    progressDialog.dismiss();
                 }
             });
 

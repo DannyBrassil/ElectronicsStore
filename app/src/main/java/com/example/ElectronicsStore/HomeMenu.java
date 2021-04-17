@@ -189,7 +189,9 @@ public class HomeMenu extends AppCompatActivity {
                 // will execute on datachange method for
                 for (DataSnapshot userSnapshot: snapshot.getChildren()) {
                     Item r= userSnapshot.getValue(Item.class);
-                    items.add(r);
+                    if(r.getStock()>0){
+                        items.add(r);
+                    }
                 }
                 recyclerView(items);
             }

@@ -126,9 +126,16 @@ public class SignUp extends AppCompatActivity {
 
                             Address address = new Address(addressLine1, addressLine2, addressLine3, county);
 
-                            User person = new User(uid, email, password, firstname, number, address);
 
-                            db.child("users").child(uid).setValue(person).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            User user1 = User.getInstance();
+                            user1.setId(uid);
+                            user1.setEmail(email);
+                            user1.setPassword(password);
+                            user1.setFirstName(firstname);
+                            user1.setNumber(number);
+                            user1.setAddress(address);
+
+                            db.child("users").child(uid).setValue(user1).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(SignUp.this, "sign up is successful", Toast.LENGTH_LONG).show();

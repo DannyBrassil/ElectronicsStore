@@ -41,7 +41,7 @@ public class Cart extends AppCompatActivity {
     ArrayList<Item>tempitems = new ArrayList<>();
      double price;
     double tempPrice=0.0;
-    User userObj = new User();
+
     TextView subtotal;
 
 
@@ -115,6 +115,7 @@ public class Cart extends AppCompatActivity {
             public void onClick(View v){
 
 
+
                 final DatabaseReference pushRef = fireDB.child("users").child(mUser.getUid()).child("orders").push();
 
                 final String id= pushRef.getKey();
@@ -138,8 +139,11 @@ public class Cart extends AppCompatActivity {
                         applyDiscounts(order);
 
 
-
-                         pushRef.setValue(order);
+                        if(items.size()>0) {
+                            pushRef.setValue(order);
+                        }else{
+                            Toast.makeText(Cart.this, "you must have items in your cart", Toast.LENGTH_LONG);
+                        }
                     }
 
                     @Override

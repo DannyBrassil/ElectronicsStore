@@ -9,13 +9,16 @@ public class User {
     private String number;
     Address address;
 
+    private static User INSTANCE;
 
-    public User() {
-
+    private User() {
     }
 
-    public User(String id,String email, String password, String fname, String num, Address address) {
-        this.id=id;this.Email = email; this.password = password; this.firstName = fname;  this.number=num; this.address=address;
+    public static User getInstance(){
+        if(INSTANCE==null){
+            INSTANCE = new User();
+        }
+        return INSTANCE;
     }
 
     public String getId() {
