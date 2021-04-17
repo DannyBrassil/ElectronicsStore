@@ -89,4 +89,8 @@ public class Item {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
+    public void buy(){
+        this.stock = this.stock-1;
+    }
 }

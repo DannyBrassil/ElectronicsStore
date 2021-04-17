@@ -140,6 +140,17 @@ public class Cart extends AppCompatActivity {
 
 
                         if(items.size()>0) {
+                            for(int i=0;i<items.size();i++) {
+                                Log.i("command", "old stock"+items.get(i).getStock());
+                                BuyItem buyItem = new BuyItem(items.get(i));
+
+                                Command command=new Command();
+                                command.takeOrder(buyItem);
+                                command.placeOrders();
+                                Log.i("command", "New stock"+items.get(i).getStock());
+                                //update new stock level in database
+                                fireDB.child("store").child("items").child(items.get(i).getId()).child("stock").setValue(items.get(i).getStock());
+                            }
                             pushRef.setValue(order);
                         }else{
                             Toast.makeText(Cart.this, "you must have items in your cart", Toast.LENGTH_LONG);
