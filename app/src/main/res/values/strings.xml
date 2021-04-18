@@ -46,4 +46,11 @@
         <item>Manufacturer descending</item>
     </string-array>
 
+    <string-array name="filter_options">
+        <item>filter by...</item>
+        <item>Name</item>
+        <item>Manufacturer</item>
+        <item>Category</item>
+    </string-array>
+
 </resources>

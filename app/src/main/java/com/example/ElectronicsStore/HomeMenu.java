@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -50,6 +51,10 @@ public class HomeMenu extends AppCompatActivity {
     private FirebaseUser mUser;
     DatabaseReference fireDB;
     final ArrayList<Item> myDataset= new ArrayList<>();
+    final ArrayList<Item> searchItems = new ArrayList<>();
+
+     String name;
+     String filter="";
 
 
     AdapterLocationList mAdapter;
@@ -75,19 +80,6 @@ public class HomeMenu extends AppCompatActivity {
 
 
 
-        fireDB.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Store store = snapshot.getValue(Store.class);
-               // storename.setText(store.getName());
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
 
@@ -124,6 +116,45 @@ public class HomeMenu extends AppCompatActivity {
             }
         });
 
+
+
+        final Spinner filterBySpinner = (Spinner)findViewById(R.id.spinner2);
+
+        filterBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Context context;
+                switch (position){
+                    case 0://filter by name
+                        filter="";
+                        break;
+                    case 1://filter by name
+                        filter="name";
+                        break;
+                    case 2://filter by manufactuer
+                        filter="manufacturer";
+                        break;
+                    case 3://filter by categpry
+                        filter="category";
+                        break;
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        Button search = findViewById(R.id.button2);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search();
+            }
+        });
 
         final Spinner sortBySpinner = (Spinner)findViewById(R.id.spinner);
         sortBySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -175,9 +206,57 @@ public class HomeMenu extends AppCompatActivity {
 
     }
 
+    private void search() {
+        mAdapter.clear();
+        searchItems.clear();
+
+        TextView SearchName = (TextView)findViewById(R.id.itemNameSearch);
+        name = SearchName.getText().toString();
+
+
+        Log.i("name",""+name);
 
 
 
+        fireDB.child("items").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {//every time change data the event listener
+                // will execute on datachange method for
+                for (DataSnapshot userSnapshot: snapshot.getChildren()) {
+                    Item r= userSnapshot.getValue(Item.class);
+                    if(r.getStock()>0){
+
+                    if(filter.equalsIgnoreCase("name")){
+                        Log.i("name",""+r.getName());
+                        if(r.getName().equalsIgnoreCase(name)){
+                            searchItems.add(r);
+                        }
+                    }else if(filter.equalsIgnoreCase("manufacturer")){
+                        Log.i("manufacturer",""+r.getManufacturer());
+                        if(r.getManufacturer().contains(name)){
+                            searchItems.add(r);
+                        }
+                    }else if(filter.equalsIgnoreCase("category")){
+                        Log.i("category",""+r.getCategory());
+                        if(r.getCategory().contains(name)){
+                            searchItems.add(r);
+                        }
+                    }else{
+                        searchItems.add(r);
+                    }
+                       }
+                }
+                recyclerView(searchItems);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.w("DBError", "Cancel Access DB");
+            }
+        });
+
+
+
+    }
 
 
     private void populateRecyclerView(){
