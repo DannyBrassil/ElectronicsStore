@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -113,68 +116,22 @@ public class Cart extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
-
-
-                final DatabaseReference pushRef = fireDB.child("users").child(mUser.getUid()).child("orders").push();
-
-                final String id= pushRef.getKey();
-
-
-                fireDB.child("users").child(mUser.getUid()).child("cart").addListenerForSingleValueEvent(new ValueEventListener() {
+                final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Cart.this);
+// ...Irrelevant code for customizing the buttons and title
+                LayoutInflater inflater = getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.cardpayment, null);
+                dialogBuilder.setView(dialogView).setPositiveButton("Pay", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        items.clear();
-                        price=0.0;
-                        for(DataSnapshot snapshot1:snapshot.getChildren()){
-                            Item item = snapshot1.getValue(Item.class);
-                            items.add(item);
-                            price=price+item.getPrice();
-                        }
-                        Date today = new Date();
-                        today= Calendar.getInstance().getTime();
-                        Order order = new Order(id,price,items,today);
-
-
-                        applyDiscounts(order);
-
-
-                        if(items.size()>0) {
-                            for(int i=0;i<items.size();i++) {
-                                Log.i("command", "old stock"+items.get(i).getStock());
-                                BuyItem buyItem = new BuyItem(items.get(i));
-
-                                Command command=new Command();
-                                command.takeOrder(buyItem);
-                                command.placeOrders();
-                                Log.i("command", "New stock"+items.get(i).getStock());
-                                //update new stock level in database
-                                fireDB.child("store").child("items").child(items.get(i).getId()).child("stock").setValue(items.get(i).getStock());
-                            }
-                            pushRef.setValue(order);
-                        }else{
-                            Toast.makeText(Cart.this, "you must have items in your cart", Toast.LENGTH_LONG);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
+                    public void onClick(DialogInterface dialog, int id) {
+                        pushOrder();
                     }
                 });
 
+                dialogBuilder.create();
+                dialogBuilder.show();
 
 
-                fireDB.child("users").child(mUser.getUid()).child("cart").removeValue(new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                        Toast.makeText(Cart.this, "Payment successful", Toast.LENGTH_LONG);
-                        startActivity(new Intent(getApplicationContext(), HomeMenu.class));
-                    }
-                });
 
-            }
-        });
 
 
 
@@ -205,6 +162,71 @@ public class Cart extends AppCompatActivity {
 
 
     }
+
+    private void pushOrder() {
+
+        final DatabaseReference pushRef = fireDB.child("users").child(mUser.getUid()).child("orders").push();
+
+        final String id= pushRef.getKey();
+
+
+        fireDB.child("users").child(mUser.getUid()).child("cart").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                items.clear();
+                price=0.0;
+                for(DataSnapshot snapshot1:snapshot.getChildren()){
+                    Item item = snapshot1.getValue(Item.class);
+                    items.add(item);
+                    price=price+item.getPrice();
+                }
+                Date today = new Date();
+                today= Calendar.getInstance().getTime();
+                Order order = new Order(id,price,items,today);
+
+
+                applyDiscounts(order);
+
+
+                if(items.size()>0) {
+                    for(int i=0;i<items.size();i++) {
+                        Log.i("command", "old stock"+items.get(i).getStock());
+                        BuyItem buyItem = new BuyItem(items.get(i));
+
+                        Command command=new Command();
+                        command.takeOrder(buyItem);
+                        command.placeOrders();
+                        Log.i("command", "New stock"+items.get(i).getStock());
+                        //update new stock level in database
+                        fireDB.child("store").child("items").child(items.get(i).getId()).child("stock").setValue(items.get(i).getStock());
+                    }
+                    //push order to database
+                    pushRef.setValue(order);
+                }else{
+                    Toast.makeText(Cart.this, "you must have items in your cart", Toast.LENGTH_LONG);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+        fireDB.child("users").child(mUser.getUid()).child("cart").removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(Cart.this, "Payment successful", Toast.LENGTH_LONG);
+                startActivity(new Intent(getApplicationContext(), HomeMenu.class));
+            }
+        });
+
+    }
+        });
+    }
+
 
     private void getOrder() {
         totalPrice.setText("");

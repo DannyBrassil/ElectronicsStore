@@ -59,70 +59,78 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void login(){
+    public void login() {
         EditText e1 = (EditText) findViewById(R.id.emailText);
         EditText e2 = (EditText) findViewById(R.id.passwordText);
         final String email = e1.getText().toString();
         final String password = e2.getText().toString();
+        if (email.isEmpty()) {
+            e1.setError("Enter email");
+            e1.requestFocus();
+        } else if (password.isEmpty()) {
+            e2.setError("Enter password");
+            e2.requestFocus();
+        } else {
 
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
 
-                            //check if email is in users database
-                            DatabaseReference dbusers;
-                            dbusers= FirebaseDatabase.getInstance().getReference("users");
-                            dbusers.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    for (DataSnapshot snapshot2 : snapshot.getChildren()) {
-                                        User user = snapshot2.getValue(User.class);
-                                        if(email.equals(user.getEmail())){
-                                            //if email is in users direct to the user homepage
-                                            Intent intent = new Intent(Login.this, HomeMenu.class);
-                                            intent.putExtra("username",user.getEmail());
-                                            startActivity(intent);
+                                //check if email is in users database
+                                DatabaseReference dbusers;
+                                dbusers = FirebaseDatabase.getInstance().getReference("users");
+                                dbusers.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for (DataSnapshot snapshot2 : snapshot.getChildren()) {
+                                            User user = snapshot2.getValue(User.class);
+                                            if (email.equals(user.getEmail())) {
+                                                //if email is in users direct to the user homepage
+                                                Intent intent = new Intent(Login.this, HomeMenu.class);
+                                                intent.putExtra("username", user.getEmail());
+                                                startActivity(intent);
+                                            }
                                         }
                                     }
-                                }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
 
-                                }
-                            });
+                                    }
+                                });
 
-                            //check if email is in store database
-                            DatabaseReference dbStore;
-                            dbStore= FirebaseDatabase.getInstance().getReference("store");
-                            dbStore.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                //check if email is in store database
+                                DatabaseReference dbStore;
+                                dbStore = FirebaseDatabase.getInstance().getReference("store");
+                                dbStore.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                                         Store c = snapshot.getValue(Store.class);
-                                        if(email.equals(c.getEmail())){
-                                            //if email is in carparks direct to the carpark homepage
+                                        if (email.equals(c.getEmail())) {
+
                                             Intent intent = new Intent(Login.this, StockControl.class);
-                                            intent.putExtra("username",c.getEmail());
+                                            intent.putExtra("username", c.getEmail());
                                             startActivity(intent);
                                         }
 
-                                }
+                                    }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
 
-                                }
-                            });
+                                    }
+                                });
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(Login.this, "signup unsuccessful", Toast.LENGTH_LONG).show();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(Login.this, "Login unsuccessful", Toast.LENGTH_LONG).show();
+                            }
+
                         }
-
-                    }
-                });
+                    });
+        }
     }
 }

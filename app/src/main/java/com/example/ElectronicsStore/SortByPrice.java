@@ -8,11 +8,8 @@ import java.util.Comparator;
 
 //sort by price ascending
 public class SortByPrice implements SortStrategy {
-
     @Override
     public ArrayList<Item> sort(ArrayList<Item> items) {
-
-
         Collections.sort(items, new Comparator<Item>() {
             @Override
             public int compare(Item o1, Item o2) {
